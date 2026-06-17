@@ -4,140 +4,307 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GDM Carb Care - นับคาร์บคุณแม่เบาหวาน</title>
+  <title>บันทึกอาหารและยา </title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="app-shell">
-
-    <div id="screen-home" class="screen active">
-      <div class="topbar">
-        <div class="logo-wrap">
-          <div class="logo-icon">🤰</div>
-          <h2>นับคาร์บคุณแม่เบาหวาน<span id="date-display">GDM Carb Care</span></h2>
-        </div>
-        <button class="bell">🔔</button>
+  <header>
+    <div class="header-row">
+      <div>
+        <h1>บันทึกอาหารและยา</h1>
       </div>
-
-      <div class="card-hero">
-        <h3>ดูแลระดับน้ำตาล <br>ใส่ใจคุณแม่และลูกน้อย</h3>
-        <p>ระบบคำนวณคาร์โบไฮเดรตสำหรับหญิงตั้งครรภ์ที่เป็นเบาหวาน</p>
-        <button class="btn-primary" data-goto="calc">เริ่มคำนวณคาร์บ</button>
-      </div>
-
-      <div style="padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <div class="card" data-goto="library" style="margin:0; cursor:pointer">📚 คลังอาหาร</div>
-        <div class="card" data-goto="meals" style="margin:0; cursor:pointer">🍽 อาหารจานเดียว</div>
-        <div class="card" data-goto="custom" style="margin:0; cursor:pointer; grid-column: span 2; text-align: center;">✏️ กรอกข้อมูลเอง</div>
-      </div>
+      <div class="date-badge" id="dateBadge"></div>
     </div>
+  </header>
 
-    <div id="screen-calc" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>คำนวณคาร์บ</h2>
-        <button class="bell">🔔</button>
-      </div>
-      <div id="calc-food-list" style="padding: 14px;"></div>
-      <div class="carb-summary" id="calc-total"></div>
-      <div style="padding: 14px;">
-        <button id="calc-save" class="btn-primary full">บันทึกรายการอาหาร</button>
-      </div>
-    </div>
-
-    <div id="screen-library" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>คลังอาหาร</h2>
-      </div>
-      <div class="cat-tabs">
-        <div class="cat-tab active" data-cat="carb"><span>🍚</span> คาร์โบไฮเดรต</div>
-        <div class="cat-tab" data-cat="veg"><span>🥦</span> ผัก</div>
-        <div class="cat-tab" data-cat="fruit"><span>🍎</span> ผลไม้</div>
-        <div class="cat-tab" data-cat="milk"><span>🥛</span> นม</div>
-      </div>
-      <div id="lib-grid" class="food-grid"></div>
-      <div id="lib-detail" style="display:none"></div>
-    </div>
-
-    <div id="screen-meals" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>อาหารจานเดียว</h2>
-      </div>
-      <div id="meals-grid" class="food-grid"></div>
-      <div id="meal-detail" style="display:none"></div>
-    </div>
-
-    <div id="screen-custom" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>กรอกข้อมูลเอง</h2>
-      </div>
-      <div style="padding: 14px;">
-        <div class="card" style="margin: 0 0 14px 0;">
-          <div class="form-group">
-            <label class="form-label">ชื่ออาหาร</label>
-            <input type="text" class="form-input" id="custom-name" placeholder="เช่น ข้าวต้มปลา">
-          </div>
-          <div class="form-group" style="margin-top: 12px;">
-            <label class="form-label">ปริมาณ (เช่น 1 ชาม)</label>
-            <input type="text" class="form-input" id="custom-amount" placeholder="1 ชาม" value="1 ส่วน">
-          </div>
-          <div class="form-group" style="margin-top: 12px;">
-            <label class="form-label">คาร์บ (ส่วน) <span style="color:var(--danger)">*</span></label>
-            <input type="number" class="form-input" id="custom-carb" placeholder="0" min="0" step="0.5">
-          </div>
-        </div>
-        <button id="custom-save" class="btn-primary full" onclick="saveCustomFood()">+ เพิ่มในบันทึก</button>
-      </div>
-    </div>
-
-    <div id="screen-log" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>บันทึกอาหาร</h2>
-      </div>
-      <div class="meal-tabs">
-        <button class="meal-tab active" data-meal="breakfast">เช้า</button>
-        <button class="meal-tab" data-meal="lunch">กลางวัน</button>
-        <button class="meal-tab" data-meal="dinner">เย็น</button>
-        <button class="meal-tab" data-meal="snack">ว่าง</button>
-      </div>
-      <div id="log-list" style="padding: 14px;"></div>
-      <div id="log-total" style="display:flex; justify-content:space-around; padding:20px; border-top:1px solid #eee">
-      </div>
-    </div>
-
-    <div id="screen-summary" class="screen">
-      <div class="sub-topbar">
-        <button class="back-btn">←</button>
-        <h2>สรุปผลประจำวัน</h2>
-      </div>
-      <div class="summary-total-card">
-        <h3>คาร์บรวมวันนี้</h3>
-        <div class="big-num" id="summary-grand-carb">0</div>
-        <div class="sub" id="summary-grand-gram">= 0 กรัมคาร์โบไฮเดรต</div>
-        <div class="kcal-row"><span>🔥</span> <span class="kcal-num" id="summary-kcal">0</span> <span
-            class="kcal-label">kcal</span></div>
-      </div>
-      <div id="summary-rows" style="padding: 14px;"></div>
-    </div>
-
-    <nav class="bottom-nav">
-      <button class="nav-item active" data-screen="home"><span>หน้าหลัก</span></button>
-      <button class="nav-item" data-screen="log"><span>บันทึก</span></button>
-      <button class="nav-fab">+</button>
-      <button class="nav-item" data-screen="summary"><span>สรุปผล</span></button>
-      <button class="nav-item"><span>อื่นๆ</span></button>
-    </nav>
-
-    <div class="toast"
-      style="position:fixed; bottom:80px; left:20px; right:20px; background:#333; color:#fff; padding:12px; border-radius:8px; text-align:center; display:none;">
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('record')">📝 บันทึก</button>
+    <button class="tab-btn" onclick="switchTab('log')">📋 รายการวันนี้</button>
+    <button class="tab-btn" onclick="switchTab('summary')">📊 สรุป</button>
+    <button class="tab-btn" onclick="switchTab('guide')">📚 คู่มือ</button>
   </div>
+
+  <main>
+
+    <!-- ═══════════════ TAB: RECORD ═══════════════ -->
+    <div class="section active" id="tab-record">
+
+      <!-- Meal Time (ปรับเหลือ 3 มื้อหลัก) -->
+      <div class="card">
+        <div class="card-title"><span>🕐</span> มื้ออาหาร</div>
+        <div class="meal-times">
+          <button class="meal-time-btn active" data-meal="เช้า" onclick="selectMeal(this)">
+            <span class="icon">🌅</span>เช้า
+          </button>
+          <button class="meal-time-btn" data-meal="กลางวัน" onclick="selectMeal(this)">
+            <span class="icon">☀️</span>กลางวัน
+          </button>
+          <button class="meal-time-btn" data-meal="เย็น" onclick="selectMeal(this)">
+            <span class="icon">🌆</span>เย็น
+          </button>
+        </div>
+      </div>
+
+      <!-- Food Group Filter -->
+      <div class="card">
+        <div class="card-title"><span>🍽️</span> เลือกกลุ่มอาหาร (5 หมู่)</div>
+        <div class="food-groups">
+          <button class="food-group-btn carb active" data-group="all" onclick="filterGroup(this, 'all')">
+            <span class="icon">🍚</span>ทั้งหมด
+          </button>
+          <button class="food-group-btn carb" data-group="carb" onclick="filterGroup(this, 'carb')">
+            <span class="icon">🌾</span>คาร์โบไฮเดรต
+          </button>
+          <button class="food-group-btn protein" data-group="protein" onclick="filterGroup(this, 'protein')">
+            <span class="icon">🥩</span>เนื้อสัตว์
+          </button>
+          <button class="food-group-btn fat" data-group="fat" onclick="filterGroup(this, 'fat')">
+            <span class="icon">🥑</span>ไขมัน
+          </button>
+          <button class="food-group-btn veg" data-group="veg" onclick="filterGroup(this, 'veg')">
+            <span class="icon">🥦</span>ผัก
+          </button>
+          <button class="food-group-btn fruit" data-group="fruit" onclick="filterGroup(this, 'fruit')">
+            <span class="icon">🍎</span>ผลไม้
+          </button>
+        </div>
+
+        <!-- Search -->
+        <input type="text" class="menu-search" placeholder="🔍 ค้นหารายการอาหาร..." oninput="searchMenu(this.value)"
+          id="menuSearch">
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menuGrid"></div>
+
+        <!-- Carb qty -->
+        <div class="carb-qty-row">
+          <label>จำนวนทัพพี / ส่วน</label>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(-0.5)">−</button>
+            <span class="qty-val" id="carbQty">1</span>
+            <button class="qty-btn" onclick="changeQty(0.5)">+</button>
+          </div>
+        </div>
+
+        <button class="add-btn" onclick="addSelectedFood()" style="width:100%">✅ เพิ่มอาหารที่เลือก</button>
+      </div>
+
+      <!-- Free Text -->
+      <div class="card">
+        <div class="card-title"><span>✏️</span> กรอกรายการอาหารเอง</div>
+        <textarea class="free-food-area" id="freeFood"
+          placeholder="เช่น ข้าวสวย 1 ทัพพี, ต้มยำกุ้ง, ผักต้ม..."></textarea>
+        <div class="insulin-row" style="grid-template-columns:1fr auto;">
+          <div class="form-group">
+            <label class="form-label">พลังงาน (KCAL) — ถ้าทราบ</label>
+            <input type="number" class="form-input" id="freeKcal" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">คาร์บ (ส่วน)</label>
+            <input type="number" class="form-input" id="freeCarb" placeholder="0" min="0" step="0.5" style="width:80px">
+          </div>
+        </div>
+        <button class="add-btn" onclick="addFreeFood()" style="width:100%">✅ เพิ่มรายการ</button>
+      </div>
+
+      <!-- Insulin -->
+      <div class="card">
+        <div class="card-title"><span>💉</span> บันทึกการฉีดยา</div>
+        <div class="insulin-row">
+          <div class="form-group">
+            <label class="form-label">ประเภทยา</label>
+            <select class="form-select" id="insulinType">
+              <option value="RI">RI (Regular Insulin)</option>
+              <option value="NPH">NPH (Intermediate)</option>
+              <option value="Glargine">Glargine (Lantus)</option>
+              <option value="Detemir">Detemir (Levemir)</option>
+              <option value="Aspart">Aspart (NovoRapid)</option>
+              <option value="Lispro">Lispro (Humalog)</option>
+              <option value="Glulisine">Glulisine (Apidra)</option>
+              <option value="IPH">IPH (Premixed)</option>
+              <option value="70/30">70/30 Premix</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ปริมาณ (unit)</label>
+            <input type="number" class="form-input" id="insulinDose" placeholder="0" min="0" style="width:80px">
+          </div>
+          <button class="add-btn rose" onclick="addInsulin()">+ เพิ่ม</button>
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label">เวลาฉีด</label>
+          <select class="form-select" id="insulinTiming">
+            <option value="ก่อนอาหารเช้า">ก่อนอาหารเช้า</option>
+            <option value="หลังอาหารเช้า">หลังอาหารเช้า</option>
+            <option value="ก่อนอาหารกลางวัน">ก่อนอาหารกลางวัน</option>
+            <option value="หลังอาหารกลางวัน">หลังอาหารกลางวัน</option>
+            <option value="ก่อนอาหารเย็น">ก่อนอาหารเย็น</option>
+            <option value="หลังอาหารเย็น">หลังอาหารเย็น</option>
+            <option value="ก่อนนอน">ก่อนนอน</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="saveDay()">💾 บันทึกข้อมูลวันนี้</button>
+    </div>
+
+    <!-- ═══════════════ TAB: LOG ═══════════════ -->
+    <div class="section" id="tab-log">
+      <div class="card">
+        <div class="card-title"><span>📋</span> รายการอาหารที่รับประทานวันนี้</div>
+        <div id="foodLogContainer">
+          <div class="empty-state">
+            <div class="icon">🍽️</div>ยังไม่มีรายการอาหาร<br>เพิ่มจากแท็บ "บันทึก"
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>💉</span> ยาที่ได้รับวันนี้</div>
+        <div id="insulinLogContainer">
+          <div class="empty-state">
+            <div class="icon">💉</div>ยังไม่มีบันทึกยา
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ TAB: SUMMARY ═══════════════ -->
+    <div class="section" id="tab-summary">
+      <div class="summary-grid">
+        <div class="summary-card s-kcal">
+          <div class="s-val" id="totalKcal">0</div>
+          <div class="s-lbl">KCAL วันนี้</div>
+        </div>
+        <div class="summary-card s-carb">
+          <div class="s-val" id="totalCarb">0</div>
+          <div class="s-lbl">คาร์บ (ส่วน)</div>
+        </div>
+        <div class="summary-card s-insulin">
+          <div class="s-val" id="totalInsulin">0</div>
+          <div class="s-lbl">Insulin (unit)</div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="card">
+        <div class="card-title"><span>📊</span> เทียบกับเป้าหมายต่อวัน</div>
+        <div style="margin-bottom:12px;">
+          <div
+            style="display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:4px;">
+            <span>พลังงาน </span>
+            <span id="kcalPct">0%</span>
+          </div>
+          <div class="prog-wrap">
+            <div class="prog-bar" id="kcalBar" style="width:0%"></div>
+          </div>
+        </div>
+        <div>
+          <div
+            style="display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:4px;">
+            <span>คาร์บ </span>
+            <span id="carbPct">0 ส่วน</span>
+          </div>
+          <div class="prog-wrap">
+            <div class="prog-bar" id="carbBar" style="width:0%"></div>
+          </div>
+          <div class="prog-label">
+            <span>0</span><span>6 ส่วน</span><span>12 ส่วน</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Breakdown -->
+      <div class="card" id="mealBreakdownCard">
+        <div class="card-title"><span>🍽️</span> สรุปแยกตามมื้อ</div>
+        <div id="mealBreakdown">
+          <div class="empty-state">
+            <div class="icon">📊</div>ยังไม่มีข้อมูล
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ TAB: GUIDE ═══════════════ -->
+    <div class="section" id="tab-guide">
+      <div class="tip-banner">
+        <strong>⚠️ หมายเหตุสำคัญสำหรับการควบคุมเบาหวาน</strong>
+        การนับคาร์บอิงตามหลักโภชนาการมาตรฐาน (1 ส่วนคาร์บ = คาร์โบไฮเดรต 15 กรัม) เป้าหมายแนะนำคือ 3-4 ส่วน/มื้อหลัก
+        เพื่อช่วยรักษาระดับน้ำตาลให้คงที่
+      </div>
+
+      <!-- คลังคู่มือภาพ -->
+      <div class="card">
+        <div class="card-title"><span>📖</span> คลังคู่มือภาพนับคาร์โบไฮเดรต (แยกตามหมู่)</div>
+
+        <!-- หมวด ข้าว-แป้ง -->
+        <div class="guide-section-title v-title-carb">🌾 หมวดข้าว-แป้ง (1 ส่วนคาร์บ = 15 กรัม)</div>
+        <div class="visual-grid">
+          <div class="visual-card">
+            <div class="visual-img-box bg-carb">image</div>
+            <div class="visual-desc">ข้าวสวย 1 ทัพพี<br><b>= 1 คาร์บ</b></div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-img-box bg-carb">image</div>
+            <div class="visual-desc">ขนมปัง 1 แผ่น<br><b>= 1 คาร์บ</b></div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-img-box bg-carb">image</div>
+            <div class="visual-desc">เส้นก๋วยเตี๋ยวสุก 1 ทัพพี<br><b>= 1 คาร์บ</b></div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-img-box bg-carb">image</div>
+            <div class="visual-desc">ข้าวเหนียวสุก 0.5 ทัพพี<br><b>= 1 คาร์บ</b></div>
+          </div>
+        </div>
+
+        <!-- หมวด ผลไม้ -->
+        <div class="guide-section-title v-title-fruit">🍎 หมวดผลไม้ (1 ส่วนคาร์บ = 15 กรัม)</div>
+        <div class="visual-grid">
+          <div class="visual-card">
+            <div class="visual-img-box bg-fruit">image</div>
+            <div class="visual-desc">ฝรั่ง 0.5 ผลกลาง<br><b>= 1 คาร์บ</b></div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-img-box bg-fruit">image</div>
+            <div class="visual-desc">แอปเปิ้ลผลเล็ก 1 ผล<br><b>= 1 คาร์บ</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target carbs (ปรับเหลือเฉพาะมื้อหลักเต็มความกว้าง) -->
+      <div class="card">
+        <div class="card-title"><span>🎯</span> เป้าหมายคาร์บพึงประสงค์ต่อวัน</div>
+        <div style="background:var(--teal-lt);border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:1.6rem;font-weight:700;color:var(--teal-dk);font-family:'IBM Plex Mono',monospace;">3–4
+          </div>
+          <div style="font-size:.8rem;color:var(--teal-dk);font-weight:600;">ส่วน / มื้อหลัก (เช้า, กลางวัน, เย็น)</div>
+        </div>
+      </div>
+
+      <!-- Insulin Instruction -->
+      <div class="card">
+        <div class="card-title"><span>💊</span> ยาอินซูลินและการทำงาน</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="padding:10px 12px;background:var(--rose-lt);border-radius:10px;">
+            <div style="font-weight:700;font-size:.85rem;color:var(--rose);">RI — Regular Insulin</div>
+            <div style="font-size:.78rem;color:#9F1239;margin-top:2px;">ออกฤทธิ์เร็ว ฉีดก่อนมื้ออาหาร 30 นาที
+              เพื่อจัดการคาร์บในมื้อนั้น</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--teal-lt);border-radius:10px;">
+            <div style="font-weight:700;font-size:.85rem;color:var(--teal-dk);">NPH / Glargine / Detemir</div>
+            <div style="font-size:.78rem;color:var(--teal-dk);margin-top:2px;">ยาออกฤทธิ์นาน
+              ควบคุมระดับน้ำตาลพื้นฐานช่วงอดอาหารหรือตอนนอน</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
 
   <script src="app.js"></script>
 </body>
