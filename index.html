@@ -1,287 +1,145 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สุขภาพคุณแม่ตั้งครรภ์</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDM Carb Care - นับคาร์บคุณแม่เบาหวาน</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="app">
-  <h1 class="app-title">🤱 <span>สุขภาพ</span>คุณแม่ตั้งครรภ์</h1>
 
-  <div class="nav">
-    <button class="nav-btn active" onclick="showTab('sugar')">
-      <i class="ti ti-droplet"></i><span>น้ำตาล</span>
-    </button>
-    <button class="nav-btn" onclick="showTab('bmi')">
-      <i class="ti ti-scale"></i><span>BMI</span>
-    </button>
-    <button class="nav-btn" onclick="showTab('food')">
-      <i class="ti ti-bowl-spoon"></i><span>เมนูอาหาร</span>
-    </button>
-    <button class="nav-btn" onclick="showTab('calorie')">
-      <i class="ti ti-apple"></i><span>บันทึกแคล</span>
-    </button>
-    <button class="nav-btn" onclick="showTab('introduce')">
-      <i class="ti ti-first-aid-kit"></i><span>คำแนะนำ</span>
-    </button>
-  </div>
+  <div class="app-shell">
 
-  <!-- ===== SUGAR ===== -->
-  <div class="section active" id="tab-sugar">
-    <h2>บันทึกน้ำตาลในเลือด</h2>
-    <div class="card">
-      <div class="metric-grid">
-        <div class="metric">
-          <div class="metric-label">ล่าสุด (mg/dL)</div>
-          <div class="metric-val" id="m-last">—</div>
+    <div id="screen-home" class="screen active">
+      <div class="topbar">
+        <div class="logo-wrap">
+          <div class="logo-icon">🤰</div>
+          <h2>นับคาร์บคุณแม่เบาหวาน<span id="date-display">GDM Carb Care</span></h2>
         </div>
-        <div class="metric">
-          <div class="metric-label">ค่าเฉลี่ย</div>
-          <div class="metric-val" id="m-avg">—</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">บันทึกทั้งหมด</div>
-          <div class="metric-val" id="m-count">0</div>
-        </div>
+        <button class="bell">🔔</button>
       </div>
 
-      <label>ค่าน้ำตาล (mg/dL)</label>
-      <input type="number" id="sugar-val" placeholder="เช่น 95" min="40" max="600">
-
-      <label>ช่วงเวลา</label>
-      <select id="sugar-time">
-        <option value="fasting">ก่อนอาหาร (อดอาหาร)</option>
-        <option value="postmeal1h">หลังอาหาร 1 ชั่วโมง</option>
-        <option value="postmeal2h">หลังอาหาร 2 ชั่วโมง</option>
-        <option value="bedtime">ก่อนนอน</option>
-      </select>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="saveSugar()">
-          <i class="ti ti-device-floppy"></i> บันทึก
-        </button>
-        <button class="btn btn-cancel" onclick="clearSugar()">
-          <i class="ti ti-x"></i> ล้าง
-        </button>
-      </div>
-      <div id="sugar-result"></div>
-    </div>
-
-    <div class="section-title-row" style="margin-top:.25rem">
-      <h2 style="font-size:15px;margin:0">ประวัติค่าน้ำตาล</h2>
-      <div class="export-row">
-        <button class="btn btn-blue btn-sm" onclick="exportSugarCSV()">
-          <i class="ti ti-download"></i> ส่งออก CSV
-        </button>
-        <button class="btn btn-cancel btn-sm" onclick="clearSugarLog()">
-          <i class="ti ti-trash"></i> ลบทั้งหมด
-        </button>
-      </div>
-    </div>
-    <div class="card" id="sugar-log-list">
-      <p class="empty">ยังไม่มีข้อมูล</p>
-    </div>
-  </div>
-
-  <!-- ===== BMI ===== -->
-  <div class="section" id="tab-bmi">
-    <h2>คำนวณ BMI คุณแม่ตั้งครรภ์</h2>
-    <div class="card">
-      <div class="info-banner">
-        <i class="ti ti-info-circle"></i>
-        กรอกน้ำหนัก <strong>ก่อนตั้งครรภ์</strong> และ <strong>ปัจจุบัน</strong> เพื่อดูว่าน้ำหนักขึ้นเหมาะสมหรือไม่
+      <div class="card-hero">
+        <h3>ดูแลระดับน้ำตาล <br>ใส่ใจคุณแม่และลูกน้อย</h3>
+        <p>ระบบคำนวณคาร์โบไฮเดรตสำหรับหญิงตั้งครรภ์ที่เป็นเบาหวาน</p>
+        <button class="btn-primary" data-goto="calc">เริ่มคำนวณคาร์บ</button>
       </div>
 
-      <div class="row2">
-        <div>
-          <label>น้ำหนักก่อนตั้งครรภ์ (กก.)</label>
-          <input type="number" id="weight" placeholder="เช่น 55" step="0.1">
-        </div>
-        <div>
-          <label>ส่วนสูง (ซม.)</label>
-          <input type="number" id="height" placeholder="เช่น 160">
-        </div>
-      </div>
-
-      <div class="row2">
-        <div>
-          <label>น้ำหนักปัจจุบัน (กก.) <span class="optional-tag">ไม่บังคับ</span></label>
-          <input type="number" id="weight-now" placeholder="เช่น 62" step="0.1">
-        </div>
-        <div>
-          <label>อายุครรภ์ปัจจุบัน (สัปดาห์)</label>
-          <input type="number" id="gestweek" placeholder="เช่น 20" min="1" max="42">
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="calcBMI()">
-          <i class="ti ti-calculator"></i> คำนวณ BMI
-        </button>
-        <button class="btn btn-cancel" onclick="clearBMI()">
-          <i class="ti ti-x"></i> ล้าง
-        </button>
-      </div>
-      <div id="bmi-result"></div>
-    </div>
-  </div>
-
-  <!-- ===== FOOD MENU ===== -->
-  <div class="section" id="tab-food">
-    <h2>เมนูอาหารคุณแม่ตั้งครรภ์</h2>
-
-    <div class="card" style="padding-bottom:.75rem">
-      <label style="margin-bottom:8px;display:block">เลือกไตรมาส</label>
-      <div class="trimester-row">
-        <button class="trim-btn active" onclick="selectTrimester(1, this)">
-          <span class="trim-num">1</span>
-          <span class="trim-label">ไตรมาส 1</span>
-          <span class="trim-sub">1–12 สัปดาห์</span>
-        </button>
-        <button class="trim-btn" onclick="selectTrimester(2, this)">
-          <span class="trim-num">2</span>
-          <span class="trim-label">ไตรมาส 2</span>
-          <span class="trim-sub">13–26 สัปดาห์</span>
-        </button>
-        <button class="trim-btn" onclick="selectTrimester(3, this)">
-          <span class="trim-num">3</span>
-          <span class="trim-label">ไตรมาส 3</span>
-          <span class="trim-sub">27–40 สัปดาห์</span>
-        </button>
+      <div style="padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="card" data-goto="library" style="margin:0; cursor:pointer">📚 คลังอาหาร</div>
+        <div class="card" data-goto="meals" style="margin:0; cursor:pointer">🍽 อาหารจานเดียว</div>
+        <div class="card" data-goto="custom" style="margin:0; cursor:pointer; grid-column: span 2; text-align: center;">✏️ กรอกข้อมูลเอง</div>
       </div>
     </div>
 
-    <div id="food-content"></div>
-  </div>
-
-  <!-- ===== CALORIE LOG ===== -->
-  <div class="section" id="tab-calorie">
-    <h2>บันทึกแคลอรีประจำวัน</h2>
-    <div class="card">
-      <label>ค้นหาเมนูอาหาร</label>
-      <div style="position:relative;">
-        <input type="text" id="food-search" placeholder="พิมพ์ชื่ออาหาร เช่น ข้าวผัด..." oninput="handleFoodSearch()" onfocus="handleFoodSearch()" autocomplete="off">
-        <div id="food-search-results" class="search-results"></div>
+    <div id="screen-calc" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>คำนวณคาร์บ</h2>
+        <button class="bell">🔔</button>
+      </div>
+      <div id="calc-food-list" style="padding: 14px;"></div>
+      <div class="carb-summary" id="calc-total"></div>
+      <div style="padding: 14px;">
+        <button id="calc-save" class="btn-primary full">บันทึกรายการอาหาร</button>
       </div>
     </div>
 
-    <div class="card">
-      <div style="font-size:14px;font-weight:500;margin-bottom:10px;color:#C2185B">
-        <i class="ti ti-checklist"></i> อาหารที่ทานวันนี้
+    <div id="screen-library" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>คลังอาหาร</h2>
       </div>
-      <div id="daily-food-log">
-        <div class="empty">ยังไม่มีรายการอาหาร</div>
+      <div class="cat-tabs">
+        <div class="cat-tab active" data-cat="carb"><span>🍚</span> คาร์โบไฮเดรต</div>
+        <div class="cat-tab" data-cat="veg"><span>🥦</span> ผัก</div>
+        <div class="cat-tab" data-cat="fruit"><span>🍎</span> ผลไม้</div>
+        <div class="cat-tab" data-cat="milk"><span>🥛</span> นม</div>
       </div>
-      <div class="total-nutrients">
-        <div class="nut-box"><div class="val" id="total-kcal">0</div><div class="lbl">Kcal</div></div>
-        <div class="nut-box"><div class="val" id="total-carb">0</div><div class="lbl">คาร์บ (g)</div></div>
-        <div class="nut-box"><div class="val" id="total-pro">0</div><div class="lbl">โปรตีน (g)</div></div>
-        <div class="nut-box"><div class="val" id="total-fat">0</div><div class="lbl">ไขมัน (g)</div></div>
+      <div id="lib-grid" class="food-grid"></div>
+      <div id="lib-detail" style="display:none"></div>
+    </div>
+
+    <div id="screen-meals" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>อาหารจานเดียว</h2>
       </div>
-      <button class="btn btn-cancel" style="margin-top:1rem;width:100%" onclick="clearFoodLog()">
-        <i class="ti ti-trash"></i> ล้างรายการวันนี้
-      </button>
+      <div id="meals-grid" class="food-grid"></div>
+      <div id="meal-detail" style="display:none"></div>
+    </div>
+
+    <div id="screen-custom" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>กรอกข้อมูลเอง</h2>
+      </div>
+      <div style="padding: 14px;">
+        <div class="card" style="margin: 0 0 14px 0;">
+          <div class="form-group">
+            <label class="form-label">ชื่ออาหาร</label>
+            <input type="text" class="form-input" id="custom-name" placeholder="เช่น ข้าวต้มปลา">
+          </div>
+          <div class="form-group" style="margin-top: 12px;">
+            <label class="form-label">ปริมาณ (เช่น 1 ชาม)</label>
+            <input type="text" class="form-input" id="custom-amount" placeholder="1 ชาม" value="1 ส่วน">
+          </div>
+          <div class="form-group" style="margin-top: 12px;">
+            <label class="form-label">คาร์บ (ส่วน) <span style="color:var(--danger)">*</span></label>
+            <input type="number" class="form-input" id="custom-carb" placeholder="0" min="0" step="0.5">
+          </div>
+        </div>
+        <button id="custom-save" class="btn-primary full" onclick="saveCustomFood()">+ เพิ่มในบันทึก</button>
+      </div>
+    </div>
+
+    <div id="screen-log" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>บันทึกอาหาร</h2>
+      </div>
+      <div class="meal-tabs">
+        <button class="meal-tab active" data-meal="breakfast">เช้า</button>
+        <button class="meal-tab" data-meal="lunch">กลางวัน</button>
+        <button class="meal-tab" data-meal="dinner">เย็น</button>
+        <button class="meal-tab" data-meal="snack">ว่าง</button>
+      </div>
+      <div id="log-list" style="padding: 14px;"></div>
+      <div id="log-total" style="display:flex; justify-content:space-around; padding:20px; border-top:1px solid #eee">
+      </div>
+    </div>
+
+    <div id="screen-summary" class="screen">
+      <div class="sub-topbar">
+        <button class="back-btn">←</button>
+        <h2>สรุปผลประจำวัน</h2>
+      </div>
+      <div class="summary-total-card">
+        <h3>คาร์บรวมวันนี้</h3>
+        <div class="big-num" id="summary-grand-carb">0</div>
+        <div class="sub" id="summary-grand-gram">= 0 กรัมคาร์โบไฮเดรต</div>
+        <div class="kcal-row"><span>🔥</span> <span class="kcal-num" id="summary-kcal">0</span> <span
+            class="kcal-label">kcal</span></div>
+      </div>
+      <div id="summary-rows" style="padding: 14px;"></div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-screen="home"><span>หน้าหลัก</span></button>
+      <button class="nav-item" data-screen="log"><span>บันทึก</span></button>
+      <button class="nav-fab">+</button>
+      <button class="nav-item" data-screen="summary"><span>สรุปผล</span></button>
+      <button class="nav-item"><span>อื่นๆ</span></button>
+    </nav>
+
+    <div class="toast"
+      style="position:fixed; bottom:80px; left:20px; right:20px; background:#333; color:#fff; padding:12px; border-radius:8px; text-align:center; display:none;">
     </div>
   </div>
 
-  <!-- ===== ARTICLE LIST ===== -->
-  <div class="section" id="tab-introduce">
-    <h2>บทความน่ารู้</h2>
-    
-    <div class="article-list">
-      <!-- Article 1 -->
-      <div class="article-item" onclick="toggleArticle(this)">
-        <div class="article-header">
-          <div class="article-img" style="background:#e8f5e9">
-            <i class="ti ti-salad" style="font-size:28px;color:#2e7d32"></i>
-          </div>
-          <div class="article-info">
-            <div class="article-title">อาหารสำหรับคุณแม่ที่เป็นเบาหวานขณะตั้งครรภ์</div>
-            <!-- <div class="article-date">12 พ.ค. 2567</div> -->
-          </div>
-          <div class="article-arrow">
-            <i class="ti ti-chevron-right"></i>
-          </div>
-        </div>
-        <div class="article-body">
-          <ul>
-            <li><strong>ลดคาร์บเชิงเดี่ยว:</strong> ข้าวขาว, ขนมปังขาว, เส้นก๋วยเตี๋ยว (เปลี่ยนมาทานข้าวกล้อง หรือ ขนมปังโฮลวีทแทน)</li>
-            <li><strong>ระวังน้ำตาลแฝง:</strong> งดน้ำชง, น้ำผลไม้กล่อง, ขนมหวาน (หากอยากทานผลไม้ ให้เลือก ฝรั่ง, แก้วมังกร, แอปเปิ้ลเขียว ในปริมาณ 1 กำมือ/มื้อ)</li>
-            <li><strong>แบ่งมื้อย่อย:</strong> ทานมื้อเล็กๆ 5-6 มื้อ/วัน แทนการทานมื้อใหญ่ 3 มื้อ เพื่อไม่ให้น้ำตาลสวิง</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Article 2 -->
-      <div class="article-item" onclick="toggleArticle(this)">
-        <div class="article-header">
-          <div class="article-img" style="background:#fff3e0">
-            <i class="ti ti-activity" style="font-size:28px;color:#e65100"></i>
-          </div>
-          <div class="article-info">
-            <div class="article-title">เทคนิคควบคุมระดับน้ำตาลหลังอาหาร</div>
-            <!-- <div class="article-date">5 พ.ค. 2567</div> -->
-          </div>
-          <div class="article-arrow">
-            <i class="ti ti-chevron-right"></i>
-          </div>
-        </div>
-        <div class="article-body">
-          <p>การเดินแกว่งแขนเบาๆ หรือทำงานบ้านเบาๆ หลังมื้ออาหารประมาณ 10-15 นาที จะช่วยให้กล้ามเนื้อดึงน้ำตาลไปใช้ได้เร็วขึ้น ทำให้น้ำตาลในเลือดหลังอาหารไม่พุ่งสูงเกินไป และช่วยลดอาการกรดไหลย้อนได้อีกด้วย</p>
-        </div>
-      </div>
-
-      <!-- Article 3 -->
-      <div class="article-item" onclick="toggleArticle(this)">
-        <div class="article-header">
-          <div class="article-img" style="background:#e3f2fd">
-            <i class="ti ti-stretching" style="font-size:28px;color:#1565c0"></i>
-          </div>
-          <div class="article-info">
-            <div class="article-title">การออกกำลังกายที่เหมาะสมสำหรับคุณแม่ตั้งครรภ์</div>
-            <!-- <div class="article-date">28 เม.ย. 2567</div> -->
-          </div>
-          <div class="article-arrow">
-            <i class="ti ti-chevron-right"></i>
-          </div>
-        </div>
-        <div class="article-body">
-          <p>คุณแม่สามารถออกกำลังกายเบาๆ ได้ เช่น การเดิน ว่ายน้ำ หรือโยคะสำหรับคนท้อง (Prenatal Yoga) วันละ 20-30 นาที จะช่วยลดอาการปวดหลัง ทำให้หลับสบาย และเตรียมกล้ามเนื้อเชิงกรานให้พร้อมสำหรับการคลอดธรรมชาติ</p>
-        </div>
-      </div>
-
-      <!-- Article 4 -->
-      <div class="article-item" onclick="toggleArticle(this)">
-        <div class="article-header">
-          <div class="article-img" style="background:#fce4ec">
-            <i class="ti ti-alert-triangle" style="font-size:28px;color:#c2185b"></i>
-          </div>
-          <div class="article-info">
-            <div class="article-title">สัญญาณเตือนที่ควรรีบพบแพทย์</div>
-            <!-- <div class="article-date">20 เม.ย. 2567</div> -->
-          </div>
-          <div class="article-arrow">
-            <i class="ti ti-chevron-right"></i>
-          </div>
-        </div>
-        <div class="article-body">
-          <ul>
-            <li>มีเลือดออกทางช่องคลอด ไม่ว่าจะปริมาณมากหรือน้อย</li>
-            <li>มีน้ำใสๆ ไหลออกจากช่องคลอด (น้ำเดิน)</li>
-            <li>ปวดท้องเกร็งรุนแรง หรือมดลูกบีบรัดตัวสม่ำเสมอก่อนกำหนด</li>
-            <li>ลูกดิ้นน้อยลงอย่างเห็นได้ชัด (น้อยกว่า 10 ครั้ง ใน 12 ชม.)</li>
-            <li>มีอาการบวมที่หน้าหรือมือร่วมกับตาพร่ามัว (เสี่ยงครรภ์เป็นพิษ)</li>
-          </ul>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-</div>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
