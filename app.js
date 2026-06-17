@@ -13,7 +13,6 @@ const MENU_DB = [
   { name: "ต้มจืดผักรวม", kcal: 40, carb: 0.2, group: "veg" }
 ];
 
-let currentMeal = "เช้า";
 let currentGroup = "all";
 let selectedFoodItem = null;
 let carbQty = 1;
@@ -39,11 +38,7 @@ function switchTab(tabId) {
   document.getElementById(`tab-${tabId}`).classList.add('active');
 }
 
-function selectMeal(btn) {
-  document.querySelectorAll('.meal-time-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentMeal = btn.getAttribute('data-meal');
-}
+
 
 function filterGroup(btn, group) {
   document.querySelectorAll('.food-group-btn').forEach(b => b.classList.remove('active'));
@@ -105,10 +100,10 @@ function showToast(msg) {
 function addSelectedFood() {
   if (!selectedFoodItem) { showToast("⚠️ กรุณาเลือกรายการอาหารก่อน"); return; }
   foodLog.push({
-    name: selectedFoodItem.name, meal: currentMeal,
+    name: selectedFoodItem.name,
     kcal: Math.round(selectedFoodItem.kcal * carbQty), carb: selectedFoodItem.carb * carbQty
   });
-  showToast(`เพิ่มอาหารมื้อ${currentMeal}แล้ว!`);
+  showToast(`เพิ่มอาหารแล้ว!`);
   updateLogView(); updateSummary();
 }
 
@@ -117,7 +112,7 @@ function addFreeFood() {
   const kcal = parseFloat(document.getElementById("freeKcal").value) || 0;
   const carb = parseFloat(document.getElementById("freeCarb").value) || 0;
   if (!name) { showToast("⚠️ กรุณากรอกชื่ออาหาร"); return; }
-  foodLog.push({ name, meal: currentMeal, kcal, carb });
+  foodLog.push({ name, kcal, carb });
   showToast("เพิ่มรายการอาหารแล้ว!");
   document.getElementById("freeFood").value = "";
   document.getElementById("freeKcal").value = "";
@@ -144,7 +139,7 @@ function updateLogView() {
   fBox.innerHTML = foodLog.length === 0 ? `<div class="empty-state"><div class="icon">🍽️</div>ยังไม่มีรายการอาหาร</div>` :
     '<ul class="log-list">' + foodLog.map((item, i) => `
       <li class="log-item">
-        <div class="log-left"><div class="log-name">${item.name}</div><div class="log-meta">มื้อ${item.meal} | ${item.kcal} kcal | คาร์บ ${item.carb} ส่วน</div></div>
+        <div class="log-left"><div class="log-name">${item.name}</div><div class="log-meta">${item.kcal} kcal | คาร์บ ${item.carb} ส่วน</div></div>
         <button class="del-btn" onclick="deleteFood(${i})">🗑️</button>
       </li>`).join('') + '</ul>';
 
@@ -159,11 +154,8 @@ function updateLogView() {
 
 function updateSummary() {
   let tKcal = 0, tCarb = 0, tInsulin = 0;
-  let breakdown = { "เช้า": { kcal: 0, carb: 0 }, "กลางวัน": { kcal: 0, carb: 0 }, "เย็น": { kcal: 0, carb: 0 } };
-
   foodLog.forEach(item => {
     tKcal += item.kcal; tCarb += item.carb;
-    if (breakdown[item.meal]) { breakdown[item.meal].kcal += item.kcal; breakdown[item.meal].carb += item.carb; }
   });
   insulinLog.forEach(item => tInsulin += item.dose);
 
@@ -180,14 +172,7 @@ function updateSummary() {
   document.getElementById("carbPct").innerText = `${tCarb.toFixed(1)} / 12 ส่วน`;
   document.getElementById("carbBar").style.width = cPct + "%";
 
-  document.getElementById("mealBreakdown").innerHTML = Object.keys(breakdown).map(m => `
-    <div class="meal-section">
-      <div class="meal-section-header">${m === 'เช้า' ? '🌅' : m === 'กลางวัน' ? '☀️' : '🌆'} มื้อ${m}</div>
-      <div style="display:flex;justify-content:space-between;padding:0 10px;font-size:0.85rem;">
-        <span>พลังงาน: <b>${breakdown[m].kcal} kcal</b></span>
-        <span>คาร์บ: <b>${breakdown[m].carb.toFixed(1)} ส่วน</b></span>
-      </div>
-    </div>`).join('');
+
 }
 
 function saveDay() {
