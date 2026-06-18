@@ -37,7 +37,7 @@
       <div class="card">
         <div class="card-title"><span>🍽️</span> เลือกกลุ่มอาหาร (5 หมู่)</div>
         <div class="food-groups">
-          <button class="food-group-btn carb active" data-group="all" onclick="filterGroup(this, 'all')">
+          <button class="food-group-btn all active" data-group="all" onclick="filterGroup(this, 'all')">
             <span class="icon">🍚</span>ทั้งหมด
           </button>
           <button class="food-group-btn carb" data-group="carb" onclick="filterGroup(this, 'carb')">
@@ -45,6 +45,9 @@
           </button>
           <button class="food-group-btn protein" data-group="protein" onclick="filterGroup(this, 'protein')">
             <span class="icon">🥩</span>เนื้อสัตว์
+          </button>
+          <button class="food-group-btn meal" data-group="meal" onclick="filterGroup(this, 'meal')">
+            <span class="icon">🍛</span>อาหารจานเดียว
           </button>
           <button class="food-group-btn fat" data-group="fat" onclick="filterGroup(this, 'fat')">
             <span class="icon">🥑</span>ไขมัน

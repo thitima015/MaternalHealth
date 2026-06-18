@@ -1,15 +1,13 @@
 const MENU_DB = [
   // ===== อาหารจานเดียว =====
-  { name: "ผัดซีอิ๊วหมูใส่ไข่", kcal: 535, carb: 3.3, group: "carb" },
-  { name: "ราดหน้าหมู", kcal: 452, carb: 2.8, group: "carb" },
-  { name: "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ", kcal: 300, carb: 2.0, group: "carb" },
-  { name: "สุกี้ทะเล", kcal: 235, carb: 1.7, group: "carb" },
-  { name: "ผัดไทยใส่ไข่", kcal: 600, carb: 3.0, group: "carb" },
-  { name: "ข้าวมันไก่", kcal: 380, carb: 2.3, group: "carb" },
-  { name: "ข้าวหมูแดง", kcal: 540, carb: 3.5, group: "carb" },
-  { name: "ข้าวขาหมู", kcal: 690, carb: 3.5, group: "carb" },
-  { name: "ข้าวผัดหมู", kcal: 590, carb: 3.0, group: "carb" },
-  { name: "ก๋วยเตี๋ยวน้ำหมู", kcal: 320, carb: 2.2, group: "carb" },
+  { name: "ผัดซีอิ๊วหมูใส่ไข่", kcal: 535, carb: 3.3, group: "meal" },
+{ name: "ราดหน้าหมู", kcal: 452, carb: 2.8, group: "meal" },
+{ name: "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ", kcal: 300, carb: 2.0, group: "meal" },
+{ name: "สุกี้ทะเล", kcal: 235, carb: 1.7, group: "meal" },
+{ name: "ผัดไทยใส่ไข่", kcal: 600, carb: 3.0, group: "meal" },
+{ name: "ข้าวมันไก่", kcal: 380, carb: 2.3, group: "meal" },
+{ name: "ข้าวหมูแดง", kcal: 540, carb: 3.5, group: "meal" },
+{ name: "ข้าวขาหมู", kcal: 690, carb: 3.5, group: "meal" },
 
   // ===== คาร์โบไฮเดรต 1 ส่วน =====
   { name: "ข้าวสวย 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
@@ -18,23 +16,17 @@ const MENU_DB = [
   { name: "ขนมปัง 1 แผ่น", kcal: 70, carb: 1, group: "carb" },
   { name: "เส้นหมี่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
   { name: "เส้นใหญ่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
-  { name: "มักกะโรนีสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
   { name: "บะหมี่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
-  { name: "วุ้นเส้นสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
-  // { name: "ลูกเดือยสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
-  // { name: "เส้นก๋วยเตี๋ยวสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
-  // { name: "แครกเกอร์ 3 แผ่น", kcal: 70, carb: 1, group: "carb" },
 
   // ===== โปรตีน =====
   { name: "ไข่ต้ม 1 ฟอง", kcal: 78, carb: 0, group: "protein" },
   { name: "ไข่เป็ดต้ม 1 ฟอง", kcal: 130, carb: 0, group: "protein" },
-  { name: "ไก่ต้มไม่มีหนัง 60 กรัม", kcal: 90, carb: 0, group: "protein" },
-  { name: "ไก่ทอด 1 ชิ้น", kcal: 220, carb: 0.5, group: "protein" },
-  { name: "ปลานึ่งมะนาว", kcal: 120, carb: 0, group: "protein" },
-  { name: "ปลาทู 1 ตัว", kcal: 150, carb: 0, group: "protein" },
+  { name: "อกไก่ต้ม 60 กรัม", kcal: 90, carb: 0, group: "protein" },
   { name: "หมูไม่ติดมัน 60 กรัม", kcal: 120, carb: 0, group: "protein" },
-  { name: "เต้าหู้ขาว 1/2 ก้อน", kcal: 80, carb: 0.5, group: "protein" },
-  { name: "ถั่วปากอ้าต้ม 1/2 ถ้วย", kcal: 150, carb: 1, group: "protein" },
+  { name: "เนื้อวัวไม่ติดมัน 60 กรัม", kcal: 130, carb: 0, group: "protein" },
+  { name: "ปลาทู 1 ตัว", kcal: 150, carb: 0, group: "protein" },
+  { name: "ปลาแซลมอน 60 กรัม", kcal: 140, carb: 0, group: "protein" },
+  { name: "กุ้งต้ม 6 ตัว", kcal: 80, carb: 0, group: "protein" },
 
   // ===== ผัก =====
   { name: "ผักกาดขาว", kcal: 13, carb: 0.2, group: "veg" },
