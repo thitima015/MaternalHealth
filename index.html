@@ -23,7 +23,7 @@
     <button class="tab-btn active" onclick="switchTab('record')">📝 บันทึก</button>
     <button class="tab-btn" onclick="switchTab('log')">📋 รายการวันนี้</button>
     <button class="tab-btn" onclick="switchTab('summary')">📊 สรุป</button>
-    <button class="tab-btn" onclick="switchTab('guide')">📚 คู่มือ</button>
+    <button class="tab-btn" onclick="switchTab('guide')">📚 คำแนะนำ</button>
   </div>
 
   <main>
@@ -49,8 +49,8 @@
           <button class="food-group-btn meal" data-group="meal" onclick="filterGroup(this, 'meal')">
             <span class="icon">🍛</span>อาหารจานเดียว
           </button>
-          <button class="food-group-btn fat" data-group="fat" onclick="filterGroup(this, 'fat')">
-            <span class="icon">🥑</span>ไขมัน
+          <button class="food-group-btn milk" data-group="milk" onclick="filterGroup(this, 'milk')">
+            <span class="icon">🥛</span>นม
           </button>
           <button class="food-group-btn veg" data-group="veg" onclick="filterGroup(this, 'veg')">
             <span class="icon">🥦</span>ผัก
@@ -216,54 +216,78 @@
         เพื่อช่วยรักษาระดับน้ำตาลให้คงที่
       </div>
 
-      <!-- คลังคู่มือภาพ -->
+      <!-- ตัวอย่างเมนูอาหารแนะนำ -->
       <div class="card">
-        <div class="card-title"><span>📖</span> คลังคู่มือภาพนับคาร์โบไฮเดรต (แยกตามหมู่)</div>
+        <div class="card-title"><span>🍽️</span> ตัวอย่างเมนูอาหารแนะนำรายมื้อ</div>
+        
+        <!-- Toggle Trimester -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <button class="meal-time-btn active" id="btn-tri1" onclick="toggleTri(1)" style="flex: 1;">ไตรมาส 1</button>
+          <button class="meal-time-btn" id="btn-tri2" onclick="toggleTri(2)" style="flex: 1;">ไตรมาส 2-3</button>
+        </div>
 
-        <!-- หมวด ข้าว-แป้ง -->
-        <div class="guide-section-title v-title-carb">🌾 หมวดข้าว-แป้ง (1 ส่วนคาร์บ = 15 กรัม)</div>
-        <div class="visual-grid">
-          <div class="visual-card">
-            <div class="visual-img-box bg-carb">image</div>
-            <div class="visual-desc">ข้าวสวย 1 ทัพพี<br><b>= 1 คาร์บ</b></div>
+        <!-- Trimester 1 Container -->
+        <div id="tri1-container">
+          <div style="margin-bottom: 14px; background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">🌅 มื้อเช้า (ไตรมาส 1)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ข้าวกล้อง 1.5 ทัพพี</li>
+              <li>ไข่ต้ม 1 ฟอง หรือเนื้อสัตว์ไขมันต่ำ 1 ส่วน</li>
+              <li>ต้มจืดผักกาดขาวเต้าหู้ (เน้นผักและเต้าหู้)</li>
+              <li>ฝรั่ง 1/2 ผลกลาง</li>
+            </ul>
           </div>
-          <div class="visual-card">
-            <div class="visual-img-box bg-carb">image</div>
-            <div class="visual-desc">ขนมปัง 1 แผ่น<br><b>= 1 คาร์บ</b></div>
+          <div style="margin-bottom: 14px; background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">☀️ มื้อกลางวัน (ไตรมาส 1)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ก๋วยเตี๋ยวเส้นหมี่น้ำใส (เส้น 1 ทัพพี) ใส่ลูกชิ้นปลาและเนื้อไก่</li>
+              <li>เกาเหลาผักรวมเพิ่มกากใย</li>
+              <li>แอปเปิ้ล 1 ผลเล็ก</li>
+            </ul>
           </div>
-          <div class="visual-card">
-            <div class="visual-img-box bg-carb">image</div>
-            <div class="visual-desc">เส้นก๋วยเตี๋ยวสุก 1 ทัพพี<br><b>= 1 คาร์บ</b></div>
-          </div>
-          <div class="visual-card">
-            <div class="visual-img-box bg-carb">image</div>
-            <div class="visual-desc">ข้าวเหนียวสุก 0.5 ทัพพี<br><b>= 1 คาร์บ</b></div>
+          <div style="background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">🌆 มื้อเย็น (ไตรมาส 1)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ข้าวสวย 1.5 ทัพพี</li>
+              <li>ปลานึ่งซีอิ๊ว หรือน้ำพริกผักต้ม</li>
+              <li>แกงส้มผักรวม (หลีกเลี่ยงแกงกะทิ)</li>
+              <li>ชมพู่ 1-2 ผล</li>
+            </ul>
           </div>
         </div>
 
-        <!-- หมวด ผลไม้ -->
-        <div class="guide-section-title v-title-fruit">🍎 หมวดผลไม้ (1 ส่วนคาร์บ = 15 กรัม)</div>
-        <div class="visual-grid">
-          <div class="visual-card">
-            <div class="visual-img-box bg-fruit">image</div>
-            <div class="visual-desc">ฝรั่ง 0.5 ผลกลาง<br><b>= 1 คาร์บ</b></div>
+        <!-- Trimester 2-3 Container -->
+        <div id="tri2-container" style="display: none;">
+          <div style="margin-bottom: 14px; background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">🌅 มื้อเช้า (ไตรมาส 2-3)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ข้าวสวยหรือข้าวกล้อง 2 ทัพพี</li>
+              <li>อกไก่ผัดขิง หรือปลาผัดขึ้นฉ่าย</li>
+              <li>ต้มจืดตำลึงหมูสับ</li>
+              <li>นมรสจืด 1 แก้ว (240 มล.)</li>
+            </ul>
           </div>
-          <div class="visual-card">
-            <div class="visual-img-box bg-fruit">image</div>
-            <div class="visual-desc">แอปเปิ้ลผลเล็ก 1 ผล<br><b>= 1 คาร์บ</b></div>
+          <div style="margin-bottom: 14px; background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">☀️ มื้อกลางวัน (ไตรมาส 2-3)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ราดหน้ายอดคะน้าใส่หมูชิ้นและไข่ (เส้นใหญ่สุก 1.5 ทัพพี)</li>
+              <li>ส้มเขียวหวาน 1 ผล หรือส้มโอ 2 กลีบ</li>
+              <li>โยเกิร์ตรสธรรมชาติ 1 ถ้วย</li>
+            </ul>
+          </div>
+          <div style="background: var(--bg); padding: 12px; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--teal-dk); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">🌆 มื้อเย็น (ไตรมาส 2-3)</div>
+            <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--slate); line-height: 1.6;">
+              <li>ข้าวกล้อง 2 ทัพพี</li>
+              <li>สเต็กปลาแซลมอนย่างเกลือ 1 ชิ้น หรือปลานึ่งแจ่ว</li>
+              <li>ผัดบล็อคโคลี่ใส่กุ้ง</li>
+              <li>มะละกอสุก 3-4 ชิ้นคำ</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <!-- Target carbs (ปรับเหลือเฉพาะมื้อหลักเต็มความกว้าง) -->
-      <div class="card">
-        <div class="card-title"><span>🎯</span> เป้าหมายคาร์บพึงประสงค์ต่อวัน</div>
-        <div style="background:var(--teal-lt);border-radius:10px;padding:14px;text-align:center;">
-          <div style="font-size:1.6rem;font-weight:700;color:var(--teal-dk);font-family:'IBM Plex Mono',monospace;">3–4
-          </div>
-          <div style="font-size:.8rem;color:var(--teal-dk);font-weight:600;">ส่วน / มื้อหลัก (เช้า, กลางวัน, เย็น)</div>
-        </div>
-      </div>
+
 
       <!-- Insulin Instruction -->
       <div class="card">

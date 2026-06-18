@@ -240,7 +240,7 @@ main {
   color: var(--rose);
 }
 
-.food-group-btn.fat.active {
+.food-group-btn.milk.active {
   border-color: var(--purple);
   background: var(--purple-lt);
   color: var(--purple);

@@ -17,8 +17,13 @@ const MENU_DB = [
   { name: "เส้นหมี่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
   { name: "เส้นใหญ่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
   { name: "บะหมี่สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
+  { name: "วุ้นเส้นสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
+  { name: "เส้นขนมจีน 1 จับ", kcal: 80, carb: 1, group: "carb" },
+  { name: "เส้นเกี้ยมอี๋สุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
+  { name: "เส้นพาสต้า/สปาเกตตีสุก 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
+  { name: "บะหมี่กึ่งสำเร็จรูป 1 ซอง", kcal: 250, carb: 2.5, group: "carb" },
 
-  // ===== โปรตีน =====
+  // ===== เนื้อสัตว์ =====
   { name: "ไข่ต้ม 1 ฟอง", kcal: 78, carb: 0, group: "protein" },
   { name: "ไข่เป็ดต้ม 1 ฟอง", kcal: 130, carb: 0, group: "protein" },
   { name: "อกไก่ต้ม 60 กรัม", kcal: 90, carb: 0, group: "protein" },
@@ -58,14 +63,18 @@ const MENU_DB = [
   { name: "ชมพู่", kcal: 50, carb: 0.8, group: "fruit" },
   { name: "สับปะรด", kcal: 60, carb: 1, group: "fruit" },
   { name: "กล้วยน้ำว้า", kcal: 60, carb: 1, group: "fruit" },
+  { name: "มะม่วงสุก 1/2 ผล", kcal: 80, carb: 1.2, group: "fruit" },
+  { name: "มังคุด 4 ผล", kcal: 60, carb: 1, group: "fruit" },
+  { name: "ส้มโอ 2 กลีบ", kcal: 60, carb: 1, group: "fruit" },
+  { name: "เงาะ 4 ผล", kcal: 60, carb: 1, group: "fruit" },
 
-  // ===== ไขมัน =====
-  { name: "ถั่วลิสง 30 กรัม", kcal: 170, carb: 0.5, group: "fat" },
-  { name: "หมูสามชั้น 50 กรัม", kcal: 260, carb: 0, group: "fat" },
-  { name: "หนังไก่ทอด 30 กรัม", kcal: 180, carb: 0, group: "fat" },
-  { name: "อะโวคาโด 1/4 ผล", kcal: 80, carb: 0.3, group: "fat" },
-  { name: "น้ำมันมะกอก 1 ช้อนชา", kcal: 45, carb: 0, group: "fat" },
-  { name: "กะทิ 2 ช้อนโต๊ะ", kcal: 90, carb: 0.2, group: "fat" },
+  // ===== นม =====
+  { name: "นมรสจืด 1 แก้ว (240 มล.)", kcal: 120, carb: 0.8, group: "milk" },
+  { name: "นมพร่องมันเนย 1 แก้ว (240 มล.)", kcal: 80, carb: 1, group: "milk" },
+  { name: "นมถั่วเหลืองจืด 1 แก้ว (240 มล.)", kcal: 80, carb: 0.5, group: "milk" },
+  { name: "นมเปรี้ยว 1 ขวดเล็ก (100 มล.)", kcal: 70, carb: 1.2, group: "milk" },
+  { name: "โยเกิร์ต 1 ถ้วย", kcal: 80, carb: 1, group: "milk" },
+  { name: "นมแพะ 1 แก้ว (240 มล.)", kcal: 150, carb: 0.8, group: "milk" },
 ];
 
 
@@ -130,11 +139,12 @@ function renderMenu(query = "") {
     const btn = document.createElement("button");
     btn.className = "menu-item";
     if (selectedFoodItem && selectedFoodItem.name === item.name) btn.classList.add("selected");
+    const carbBadge = item.group === "protein" ? "" : `<span class="badge carb">${item.carb} คาร์บ</span>`;
     btn.innerHTML = `
       <div class="name">${item.name}</div>
       <div class="stats">
         <span class="badge kcal">${item.kcal} kcal</span>
-        <span class="badge carb">${item.carb} คาร์บ</span>
+        ${carbBadge}
       </div>
     `;
     btn.onclick = () => {
@@ -161,7 +171,8 @@ function addSelectedFood() {
   if (!selectedFoodItem) { showToast("⚠️ กรุณาเลือกรายการอาหารก่อน"); return; }
   foodLog.push({
     name: selectedFoodItem.name,
-    kcal: Math.round(selectedFoodItem.kcal * carbQty), carb: selectedFoodItem.carb * carbQty
+    kcal: Math.round(selectedFoodItem.kcal * carbQty), carb: selectedFoodItem.carb * carbQty,
+    group: selectedFoodItem.group
   });
   showToast(`เพิ่มอาหารแล้ว!`);
   updateLogView(); updateSummary();
@@ -197,11 +208,14 @@ function deleteInsulin(idx) { insulinLog.splice(idx, 1); updateLogView(); update
 function updateLogView() {
   const fBox = document.getElementById("foodLogContainer");
   fBox.innerHTML = foodLog.length === 0 ? `<div class="empty-state"><div class="icon">🍽️</div>ยังไม่มีรายการอาหาร</div>` :
-    '<ul class="log-list">' + foodLog.map((item, i) => `
+    '<ul class="log-list">' + foodLog.map((item, i) => {
+      const carbText = item.group === "protein" ? "" : ` | คาร์บ ${item.carb} ส่วน`;
+      return `
       <li class="log-item">
-        <div class="log-left"><div class="log-name">${item.name}</div><div class="log-meta">${item.kcal} kcal | คาร์บ ${item.carb} ส่วน</div></div>
+        <div class="log-left"><div class="log-name">${item.name}</div><div class="log-meta">${item.kcal} kcal${carbText}</div></div>
         <button class="del-btn" onclick="deleteFood(${i})">🗑️</button>
-      </li>`).join('') + '</ul>';
+      </li>`;
+    }).join('') + '</ul>';
 
   const iBox = document.getElementById("insulinLogContainer");
   iBox.innerHTML = insulinLog.length === 0 ? `<div class="empty-state"><div class="icon">💉</div>ยังไม่มีบันทึกยา</div>` :
@@ -237,4 +251,23 @@ function updateSummary() {
 
 function saveDay() {
   showToast("💾 บันทึกข้อมูลวันนี้สำเร็จ!");
+}
+
+function toggleTri(tri) {
+  const btn1 = document.getElementById("btn-tri1");
+  const btn2 = document.getElementById("btn-tri2");
+  const con1 = document.getElementById("tri1-container");
+  const con2 = document.getElementById("tri2-container");
+  
+  if (tri === 1) {
+    btn1.classList.add("active");
+    btn2.classList.remove("active");
+    con1.style.display = "block";
+    con2.style.display = "none";
+  } else {
+    btn1.classList.remove("active");
+    btn2.classList.add("active");
+    con1.style.display = "none";
+    con2.style.display = "block";
+  }
 }
