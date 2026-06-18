@@ -222,6 +222,12 @@ main {
   margin-bottom: 3px;
 }
 
+.food-group-btn.all.active {
+  border-color: var(--teal);
+  background: var(--teal-lt);
+  color: var(--teal-dk);
+}
+
 .food-group-btn.carb.active {
   border-color: var(--amber);
   background: var(--amber-lt);
@@ -252,7 +258,7 @@ main {
   color: #EA580C;
 }
 
-.food-group-btn.milk.active {
+.food-group-btn.meal.active {
   border-color: var(--sky);
   background: var(--sky-lt);
   color: var(--sky);
