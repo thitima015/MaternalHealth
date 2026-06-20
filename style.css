@@ -354,6 +354,11 @@ main {
   color: var(--teal-dk);
 }
 
+.badge.portion {
+  background: var(--purple-lt);
+  color: var(--purple);
+}
+
 /* ── Free Text ── */
 .free-food-area {
   width: 100%;

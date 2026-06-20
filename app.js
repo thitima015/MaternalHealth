@@ -1,13 +1,13 @@
 const MENU_DB = [
   // ===== อาหารจานเดียว =====
   { name: "ผัดซีอิ๊วหมูใส่ไข่", kcal: 535, carb: 3.3, group: "meal" },
-{ name: "ราดหน้าหมู", kcal: 452, carb: 2.8, group: "meal" },
-{ name: "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ", kcal: 300, carb: 2.0, group: "meal" },
-{ name: "สุกี้ทะเล", kcal: 235, carb: 1.7, group: "meal" },
-{ name: "ผัดไทยใส่ไข่", kcal: 600, carb: 3.0, group: "meal" },
-{ name: "ข้าวมันไก่", kcal: 380, carb: 2.3, group: "meal" },
-{ name: "ข้าวหมูแดง", kcal: 540, carb: 3.5, group: "meal" },
-{ name: "ข้าวขาหมู", kcal: 690, carb: 3.5, group: "meal" },
+  { name: "ราดหน้าหมู", kcal: 452, carb: 2.8, group: "meal" },
+  { name: "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ", kcal: 300, carb: 2.0, group: "meal" },
+  { name: "สุกี้ทะเล", kcal: 235, carb: 1.7, group: "meal" },
+  { name: "ผัดไทยใส่ไข่", kcal: 600, carb: 3.0, group: "meal" },
+  { name: "ข้าวมันไก่", kcal: 380, carb: 2.3, group: "meal" },
+  { name: "ข้าวหมูแดง", kcal: 540, carb: 3.5, group: "meal" },
+  { name: "ข้าวขาหมู", kcal: 690, carb: 3.5, group: "meal" },
 
   // ===== คาร์โบไฮเดรต 1 ส่วน =====
   { name: "ข้าวสวย 1 ทัพพี", kcal: 80, carb: 1, group: "carb" },
@@ -54,19 +54,19 @@ const MENU_DB = [
   { name: "ดอกกะหล่ำ", kcal: 25, carb: 0.4, group: "veg" },
 
   // ===== ผลไม้ =====
-  { name: "แอปเปิ้ล", kcal: 60, carb: 1, group: "fruit" },
-  { name: "ฝรั่ง", kcal: 60, carb: 1, group: "fruit" },
-  { name: "ส้ม", kcal: 60, carb: 1, group: "fruit" },
-  { name: "แตงโม", kcal: 60, carb: 1, group: "fruit" },
-  { name: "มะละกอ", kcal: 55, carb: 1, group: "fruit" },
-  { name: "แก้วมังกร", kcal: 60, carb: 1, group: "fruit" },
-  { name: "ชมพู่", kcal: 50, carb: 0.8, group: "fruit" },
-  { name: "สับปะรด", kcal: 60, carb: 1, group: "fruit" },
-  { name: "กล้วยน้ำว้า", kcal: 60, carb: 1, group: "fruit" },
-  { name: "มะม่วงสุก 1/2 ผล", kcal: 80, carb: 1.2, group: "fruit" },
-  { name: "มังคุด 4 ผล", kcal: 60, carb: 1, group: "fruit" },
-  { name: "ส้มโอ 2 กลีบ", kcal: 60, carb: 1, group: "fruit" },
-  { name: "เงาะ 4 ผล", kcal: 60, carb: 1, group: "fruit" },
+  { name: "แอปเปิ้ล", portion: "1/2 ผล (กลาง)", kcal: 60, carb: 1, group: "fruit" },
+  { name: "ฝรั่ง", portion: "1/2 ผล (กลาง)", kcal: 60, carb: 1, group: "fruit" },
+  { name: "ส้ม", portion: "1 ผล (ใหญ่)", kcal: 60, carb: 1, group: "fruit" },
+  { name: "แตงโม", portion: "1 ชิ้นเมลอน", kcal: 60, carb: 1, group: "fruit" },
+  { name: "มะละกอสุก", portion: "6-8 ชิ้นพอดีคำ", kcal: 55, carb: 1, group: "fruit" },
+  { name: "แก้วมังกร", portion: "1/2 ผล (กลาง)", kcal: 60, carb: 1, group: "fruit" },
+  { name: "ชมพู่", portion: "2 ผล", kcal: 60, carb: 1, group: "fruit" },
+  { name: "สับปะรด", portion: "6-8 ชิ้นพอดีคำ", kcal: 60, carb: 1, group: "fruit" },
+  { name: "กล้วยน้ำว้า", portion: "1 ผล", kcal: 60, carb: 1, group: "fruit" },
+  { name: "มะม่วงสุก", portion: "1/2 ผล", kcal: 80, carb: 1.2, group: "fruit" },
+  { name: "มังคุด", portion: "4 ผล", kcal: 60, carb: 1, group: "fruit" },
+  { name: "ส้มโอ", portion: "2 กลีบ", kcal: 60, carb: 1, group: "fruit" },
+  { name: "เงาะ", portion: "4 ผล", kcal: 60, carb: 1, group: "fruit" },
 
   // ===== นม =====
   { name: "นมรสจืด 1 แก้ว (240 มล.)", kcal: 120, carb: 0.8, group: "milk" },
@@ -140,11 +140,13 @@ function renderMenu(query = "") {
     btn.className = "menu-item";
     if (selectedFoodItem && selectedFoodItem.name === item.name) btn.classList.add("selected");
     const carbBadge = item.group === "protein" ? "" : `<span class="badge carb">${item.carb} คาร์บ</span>`;
+    const portionBadge = item.portion ? `<span class="badge portion">${item.portion}</span>` : "";
     btn.innerHTML = `
       <div class="name">${item.name}</div>
       <div class="stats">
         <span class="badge kcal">${item.kcal} kcal</span>
         ${carbBadge}
+        ${portionBadge}
       </div>
     `;
     btn.onclick = () => {
@@ -170,7 +172,7 @@ function showToast(msg) {
 function addSelectedFood() {
   if (!selectedFoodItem) { showToast("⚠️ กรุณาเลือกรายการอาหารก่อน"); return; }
   foodLog.push({
-    name: selectedFoodItem.name,
+    name: selectedFoodItem.name + (selectedFoodItem.portion ? ` (${selectedFoodItem.portion})` : ""),
     kcal: Math.round(selectedFoodItem.kcal * carbQty), carb: selectedFoodItem.carb * carbQty,
     group: selectedFoodItem.group
   });
