@@ -897,3 +897,100 @@ main {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── DTX Styling ── */
+.form-input.dtx-input:focus,
+.form-select.dtx-select:focus {
+  border-color: var(--sky);
+}
+
+.add-btn.sky {
+  background: var(--sky);
+}
+
+.add-btn.sky:hover {
+  background: #0369a1;
+}
+
+.dtx-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dtx-sum-card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 6px;
+  text-align: center;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+}
+
+.dtx-sum-card.normal {
+  background: var(--green-lt);
+  border-color: #A7F3D0;
+}
+
+.dtx-sum-card.high {
+  background: var(--rose-lt);
+  border-color: #FECDD3;
+}
+
+.dtx-sum-card .dtx-lbl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.dtx-sum-card.normal .dtx-lbl {
+  color: var(--green);
+}
+
+.dtx-sum-card.high .dtx-lbl {
+  color: var(--rose);
+}
+
+.dtx-sum-card .dtx-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--slate);
+  line-height: 1.1;
+}
+
+.dtx-sum-card.normal .dtx-val {
+  color: #15803d;
+}
+
+.dtx-sum-card.high .dtx-val {
+  color: #be123c;
+}
+
+.dtx-sum-card .dtx-status {
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+.dtx-sum-card.normal .dtx-status {
+  color: #16a34a;
+}
+
+.dtx-sum-card.high .dtx-status {
+  color: var(--rose);
+}
+
+.dtx-sum-card .dtx-target {
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 4px;
+  opacity: 0.8;
+}

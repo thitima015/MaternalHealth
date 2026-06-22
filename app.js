@@ -84,6 +84,7 @@ let carbQty = 1;
 
 let foodLog = [];
 let insulinLog = [];
+let dtxLog = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const now = new Date();
@@ -204,8 +205,19 @@ function addInsulin() {
   updateLogView(); updateSummary();
 }
 
+function addDtx() {
+  const timing = document.getElementById("dtxTiming").value;
+  const value = parseFloat(document.getElementById("dtxValue").value) || 0;
+  if (value <= 0) { showToast("⚠️ กรุณาระบุค่าน้ำตาลในเลือด"); return; }
+  dtxLog.push({ timing, value });
+  showToast("บันทึกค่าน้ำตาลแล้ว!");
+  document.getElementById("dtxValue").value = "";
+  updateLogView(); updateSummary();
+}
+
 function deleteFood(idx) { foodLog.splice(idx, 1); updateLogView(); updateSummary(); }
 function deleteInsulin(idx) { insulinLog.splice(idx, 1); updateLogView(); updateSummary(); }
+function deleteDtx(idx) { dtxLog.splice(idx, 1); updateLogView(); updateSummary(); }
 
 function updateLogView() {
   const fBox = document.getElementById("foodLogContainer");
@@ -226,6 +238,25 @@ function updateLogView() {
         <div class="log-left"><div class="log-name">${item.type} (${item.dose} Unit)</div><div class="log-meta">${item.timing}</div></div>
         <button class="del-btn" onclick="deleteInsulin(${i})">🗑️</button>
       </li>`).join('') + '</ul>';
+
+  const dBox = document.getElementById("dtxLogContainer");
+  dBox.innerHTML = dtxLog.length === 0 ? `<div class="empty-state"><div class="icon">🩸</div>ยังไม่มีบันทึกค่าน้ำตาล</div>` :
+    '<ul class="log-list">' + dtxLog.map((item, i) => {
+      let limit = 140;
+      if (item.timing === "ก่อนอาหารเช้า") limit = 95;
+      else if (item.timing === "ก่อนนอน") limit = 120;
+      const isHigh = item.value >= limit;
+      const statusText = isHigh ? "สูงกว่าเกณฑ์" : "ปกติ";
+      const badgeStyle = isHigh ? "background:#FECDD3;color:#BE123C;" : "background:#DCFCE7;color:#16A34A;";
+      return `
+      <li class="log-item">
+        <div class="log-left">
+          <div class="log-name">${item.value} mg/dL <span class="badge" style="${badgeStyle}">${statusText}</span></div>
+          <div class="log-meta">${item.timing} (เป้าหมาย < ${limit})</div>
+        </div>
+        <button class="del-btn" onclick="deleteDtx(${i})">🗑️</button>
+      </li>`;
+    }).join('') + '</ul>';
 }
 
 function updateSummary() {
@@ -248,7 +279,39 @@ function updateSummary() {
   document.getElementById("carbPct").innerText = `${tCarb.toFixed(1)} / 12 ส่วน`;
   document.getElementById("carbBar").style.width = cPct + "%";
 
+  // DTX Summary Statuses
+  const dtxSummary = {
+    "ก่อนอาหารเช้า": { valId: "val-dtx-fasting", cardId: "sum-dtx-fasting", limit: 95 },
+    "หลังทานข้าว 1ชม": { valId: "val-dtx-postmeal", cardId: "sum-dtx-postmeal", limit: 140 },
+    "ก่อนนอน": { valId: "val-dtx-bedtime", cardId: "sum-dtx-bedtime", limit: 120 }
+  };
 
+  // Reset UI
+  for (const timing in dtxSummary) {
+    const config = dtxSummary[timing];
+    const valEl = document.getElementById(config.valId);
+    const cardEl = document.getElementById(config.cardId);
+    if (valEl && cardEl) {
+      valEl.innerText = "-";
+      cardEl.className = "dtx-sum-card";
+      cardEl.querySelector('.dtx-status').innerText = "ไม่มีข้อมูล";
+    }
+  }
+
+  // Find latest for each timing
+  dtxLog.forEach(item => {
+    const config = dtxSummary[item.timing];
+    if (config) {
+      const valEl = document.getElementById(config.valId);
+      const cardEl = document.getElementById(config.cardId);
+      if (valEl && cardEl) {
+        valEl.innerText = item.value;
+        const isHigh = item.value >= config.limit;
+        cardEl.className = `dtx-sum-card ${isHigh ? 'high' : 'normal'}`;
+        cardEl.querySelector('.dtx-status').innerText = isHigh ? "สูงกว่าเกณฑ์" : "ปกติ";
+      }
+    }
+  });
 }
 
 function saveDay() {
