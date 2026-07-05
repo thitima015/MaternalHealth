@@ -243,7 +243,7 @@ function updateLogView() {
   dBox.innerHTML = dtxLog.length === 0 ? `<div class="empty-state"><div class="icon">🩸</div>ยังไม่มีบันทึกค่าน้ำตาล</div>` :
     '<ul class="log-list">' + dtxLog.map((item, i) => {
       let limit = 140;
-      if (item.timing === "ก่อนอาหารเช้า") limit = 95;
+      if (item.timing === "ก่อนอาหารเช้า" || item.timing === "ก่อนอาหารกลางวัน" || item.timing === "ก่อนอาหารเย็น") limit = 95;
       else if (item.timing === "ก่อนนอน") limit = 120;
       const isHigh = item.value >= limit;
       const statusText = isHigh ? "สูงกว่าเกณฑ์" : "ปกติ";
@@ -282,6 +282,8 @@ function updateSummary() {
   // DTX Summary Statuses
   const dtxSummary = {
     "ก่อนอาหารเช้า": { valId: "val-dtx-fasting", cardId: "sum-dtx-fasting", limit: 95 },
+    "ก่อนอาหารกลางวัน": { valId: "val-dtx-lunch", cardId: "sum-dtx-lunch", limit: 95 },
+    "ก่อนอาหารเย็น": { valId: "val-dtx-dinner", cardId: "sum-dtx-dinner", limit: 95 },
     "หลังทานข้าว 1ชม": { valId: "val-dtx-postmeal", cardId: "sum-dtx-postmeal", limit: 140 },
     "ก่อนนอน": { valId: "val-dtx-bedtime", cardId: "sum-dtx-bedtime", limit: 120 }
   };
